@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><title>Clipper</title><meta name="description" content="Private tool that manages metadata and publishing schedules on the owner's own YouTube channels."></head><body><main>
+<header><b>Clipper</b><nav><a href="index.html">About</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></nav></header>
+<h1>Clipper</h1>
+<p>Clipper is a private, non-commercial desktop tool used by a single creator. It turns the owner's recorded game streams into short vertical clips and manages <strong>the owner's own YouTube channels</strong>. It runs only on the owner's computer. It is not offered to the public, has no other users and does not access any channel the owner does not manage.</p>
+
+<h2>What it does</h2>
+<div class="card"><ul>
+<li>Fills in metadata for videos the owner uploaded: title, description, tags, category, language, made-for-kids and altered-content declarations.</li>
+<li>Schedules publishing times of the owner's private videos.</li>
+<li>Sets custom thumbnails, uploads caption files (.srt) and adds videos to the owner's playlists.</li>
+<li>Uploads videos produced by the owner, always as private, so the owner can review them before publishing.</li>
+<li>Reads view counts and YouTube Analytics reports of the owner's own videos to decide which formats work and to plan the schedule.</li>
+</ul></div>
+<p>The tool only carries out jobs the owner prepared and confirmed (which video, which text, which publishing time). It never comments, likes, subscribes or interacts with other users, and never deletes videos.</p>
+
+<h2>YouTube API usage</h2>
+<div class="card"><table>
+<tr><th>API</th><th>Methods</th><th>Purpose</th></tr>
+<tr><td>YouTube Data API v3</td><td><code>channels.list</code>, <code>videos.list</code>, <code>playlistItems.list</code></td><td>list the owner's videos and their status</td></tr>
+<tr><td>YouTube Data API v3</td><td><code>videos.update</code></td><td>metadata and publishing schedule of the owner's videos</td></tr>
+<tr><td>YouTube Data API v3</td><td><code>videos.insert</code>, <code>thumbnails.set</code>, <code>captions.list</code>, <code>captions.insert</code></td><td>private uploads, thumbnails and captions of the owner's videos</td></tr>
+<tr><td>YouTube Data API v3</td><td><code>playlists.list</code>, <code>playlists.insert</code>, <code>playlistItems.insert</code></td><td>the owner's playlists</td></tr>
+<tr><td>YouTube Data API v3</td><td><code>search.list</code> (occasional)</td><td>public research of popular videos in the owner's niche</td></tr>
+<tr><td>YouTube Analytics API</td><td><code>reports.query</code></td><td>views and retention of the owner's videos</td></tr>
+</table>
+<p class="mut">OAuth scopes: <code>https://www.googleapis.com/auth/youtube.force-ssl</code>, <code>https://www.googleapis.com/auth/yt-analytics.readonly</code>.</p></div>
+
+<h2>Why more quota</h2>
+<p>The owner publishes many short videos per day across several own channels. Each metadata and schedule update costs 50 units and each caption upload about 450, so the default 10,000 units per day are used up before all of the owner's own videos are prepared. No data is collected about other users.</p>
+
+<p>See the <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>. This tool uses YouTube API Services and complies with the <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a> and the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+<footer>Contact: <a href="mailto:CONTACT_EMAIL">CONTACT_EMAIL</a> · Last updated: November 21, 2026</footer>
+</main></body></html>
