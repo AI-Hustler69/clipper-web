@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#fff;font:15px/1.35 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1d2330}
+.wrap{width:1400px;padding:36px 40px}h1{font-size:26px;margin:0 0 4px}.sub{color:#5b6270;margin:0 0 24px}
+.lane{display:grid;grid-template-columns:150px 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+.who{border-radius:12px;background:#1d2330;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px}
+.steps{display:flex;gap:10px;align-items:center}
+.s{flex:1;border:2px solid #2a6ff0;background:#eef4ff;border-radius:12px;padding:10px 12px;min-height:92px}
+.s b{display:block;margin-bottom:3px}.s.g{border-color:#1f9d55;background:#ebf8f0}.s.r{border-color:#d42020;background:#fdeeee}.s.y{border-color:#c98a00;background:#fff7e3}
+.n{display:inline-block;width:22px;height:22px;border-radius:50%;background:#2a6ff0;color:#fff;font-size:13px;text-align:center;line-height:22px;margin-right:6px}
+.a{font-size:24px;color:#9aa3b2}.small{font-size:13px;color:#3a4150}
+h2{font-size:18px;margin:26px 0 10px}
+</style></head><body><div class="wrap">
+<h1>Clipper – user flows</h1><p class="sub">There is a single user: the channel owner. Every change on YouTube comes from a job the owner prepared and approved.</p>
+<h2>A. One-time sign-in</h2>
+<div class="lane"><div class="who">Owner</div><div class="steps">
+<div class="s"><span class="n">1</span><b>Run “youtube.bat login &lt;channel&gt;”</b><span class="small">Browser opens Google sign-in.</span></div><div class="a">→</div>
+<div class="s r"><span class="n">2</span><b>Google consent screen</b><span class="small">Owner picks own account + channel, sees requested scopes, clicks Allow.</span></div><div class="a">→</div>
+<div class="s g"><span class="n">3</span><b>Token stored locally</b><span class="small">Refresh token saved only on the owner's PC.</span></div><div class="a">→</div>
+<div class="s"><span class="n">4</span><b>Revoke any time</b><span class="small">Google Account → Security → Third-party access.</span></div></div></div>
+<h2>B. Daily: clips → metadata and schedule</h2>
+<div class="lane"><div class="who">Owner + clipper</div><div class="steps">
+<div class="s"><span class="n">1</span><b>Clips are produced</b><span class="small">Stream → transcription → vertical clips (local, no API).</span></div><div class="a">→</div>
+<div class="s y"><span class="n">2</span><b>Owner reviews</b><span class="small">Approves / rejects each clip (swipe UI). Job file with title, description, tags, time.</span></div><div class="a">→</div>
+<div class="s"><span class="n">3</span><b>Upload</b><span class="small">Owner uploads files in YouTube Studio (kept private), or the tool uploads as private.</span></div></div></div>
+<div class="lane"><div class="who">Owner + tool</div><div class="steps">
+<div class="s"><span class="n">4</span><b>Run youtube.bat</b><span class="small">Reads own videos (<code>videos.list</code>), matches them by file name.</span></div><div class="a">→</div>
+<div class="s y"><span class="n">5</span><b>Preflight list</b><span class="small">Shows every planned change and the quota estimate.</span></div><div class="a">→</div>
+<div class="s y"><span class="n">6</span><b>Owner confirms “ano”</b><span class="small">Or an optional night run the owner scheduled (metadata and schedule only, no uploads).</span></div><div class="a">→</div>
+<div class="s r"><span class="n">7</span><b>API calls</b><span class="small"><code>videos.update</code> (metadata, publishAt), thumbnails, captions, playlist.</span></div><div class="a">→</div>
+<div class="s g"><span class="n">8</span><b>Video goes live</b><span class="small">At the scheduled time, on the owner's channel.</span></div></div></div>
+<h2>C. Weekly: learning from results</h2>
+<div class="lane"><div class="who">Tool</div><div class="steps">
+<div class="s r"><span class="n">1</span><b>Read stats</b><span class="small"><code>videos.list</code> statistics + Analytics <code>reports.query</code> for own videos.</span></div><div class="a">→</div>
+<div class="s g"><span class="n">2</span><b>Local report</b><span class="small">Which formats, lengths and streamers perform best.</span></div><div class="a">→</div>
+<div class="s y"><span class="n">3</span><b>Owner decides</b><span class="small">Plans next clips and schedule. No automatic publishing.</span></div></div></div>
+</div></body></html>

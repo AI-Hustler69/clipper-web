@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#fff;font:15px/1.35 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1d2330}
+.wrap{width:1400px;padding:36px 40px}
+h1{font-size:26px;margin:0 0 4px}.sub{color:#5b6270;margin:0 0 26px}
+.row{display:flex;gap:28px;align-items:stretch}
+.zone{border:2px dashed #9aa3b2;border-radius:16px;padding:18px 18px 12px;position:relative}
+.zone>.lbl{position:absolute;top:-12px;left:16px;background:#fff;padding:0 8px;font-weight:700;color:#5b6270;font-size:14px}
+.box{border:2px solid #2a6ff0;background:#eef4ff;border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.box b{display:block;font-size:16px;margin-bottom:4px}.box.g{border-color:#1f9d55;background:#ebf8f0}
+.box.r{border-color:#d42020;background:#fdeeee}.box.y{border-color:#c98a00;background:#fff7e3}
+.small{font-size:13px;color:#3a4150}
+.arrow{display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:150px;color:#1d2330;font-size:13px;text-align:center}
+.arrow .line{font-size:34px;line-height:1;color:#2a6ff0}
+code{font-size:12px;background:#f2f3f6;border-radius:4px;padding:0 3px}
+.note{margin-top:20px;font-size:14px;color:#3a4150;border-top:1px solid #e2e4ea;padding-top:12px}
+</style></head><body><div class="wrap">
+<h1>Clipper – architecture</h1><p class="sub">Private single-user tool. Runs only on the owner's Windows PC and manages only the owner's own YouTube channels.</p>
+<div class="row">
+ <div class="zone" style="flex:1.25"><div class="lbl">Owner's PC (Windows 11)</div>
+  <div class="box"><b>1. Clip production (clipper)</b><span class="small">Records the owner's chosen game streams, transcribes them locally (Whisper), cuts vertical 9:16 clips with FFmpeg, burns in subtitles. <b>No Google API calls.</b></span></div>
+  <div class="box y"><b>2. Job files</b><span class="small">For each approved clip: file name, title, description, tags, category, language, schedule time (JSON). Prepared and reviewed by the owner.</span></div>
+  <div class="box"><b>3. Channel manager (youtube.bat / Python)</b><span class="small">Matches jobs to the owner's uploaded videos, shows a preflight list of all changes, applies them after the owner types “ano” (yes) or in an optional night run the owner scheduled (metadata and schedule only). Never deletes videos, never interacts with other users.</span></div>
+  <div class="box g"><b>Local storage</b><span class="small">OAuth refresh tokens and client secret stored only on this PC (outside any repository). Run results and channel statistics in the owner's private Git repository.</span></div>
+ </div>
+ <div class="arrow"><div class="line">⇄</div>HTTPS<br>OAuth 2.0<br><code>youtube.force-ssl</code><br><code>yt-analytics.readonly</code></div>
+ <div class="zone" style="flex:1"><div class="lbl">Google</div>
+  <div class="box r"><b>Google OAuth 2.0</b><span class="small">Owner signs in with their own Google account and selects their own channel. Access revocable at myaccount.google.com/permissions.</span></div>
+  <div class="box r"><b>YouTube Data API v3</b><span class="small"><code>channels.list</code> <code>videos.list</code> <code>playlistItems.list</code> – read own videos<br><code>videos.update</code> – metadata, schedule<br><code>thumbnails.set</code> <code>captions.insert</code> <code>playlists.insert</code> <code>playlistItems.insert</code><br><code>videos.insert</code> – private uploads (few per day)<br><code>search.list</code> – occasional public niche research</span></div>
+  <div class="box r"><b>YouTube Analytics API</b><span class="small"><code>reports.query</code> – views and retention of own videos</span></div>
+ </div>
+ <div class="arrow"><div class="line">→</div>publishes on<br>the owner's<br>schedule</div>
+ <div class="zone" style="flex:.7"><div class="lbl">YouTube</div>
+  <div class="box g"><b>Owner's own channels</b><span class="small">Gaming clips channel and the owner's other channels. Videos stay private until the scheduled time.</span></div>
+  <div class="box"><b>YouTube Studio</b><span class="small">Owner uploads most clips manually here (same file name), then the tool fills in metadata.</span></div>
+ </div>
+</div>
+<p class="note">No third-party servers, no advertising, no data about other users is collected. The only external service the tool talks to is Google (OAuth, YouTube Data API, YouTube Analytics API).</p>
+</div></body></html>
